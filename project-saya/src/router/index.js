@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "@/views/Home.vue";
 import Details from "@/views/Details.vue";
 import capture from "@/views/CaptureList.vue";
+// import LoadingSpiner from './components/LoadingSpiner.vue';
 // import Details from "@/views/Details.vue";
 // import capture from "@/views/CaptureList.vue";
 const router = createRouter({

@@ -41,22 +41,22 @@ const goToDetail = (id) => {
 
 <template>
     <section
-    class="grid  md:grid-cols- lg:grid-cols-4 gap-3 p-3 -mt-25"
+    class="grid md:grid-cols-3 lg:grid-cols-4 gap-4 p-5 -mt-25"
     >
-    <div v-if="isLoading" class="text-center text-lg font-semibold text-white">
+    <div v-if="isLoading" class="text-center text-lg font-semibold text-red-500">
       Loading...
     </div>
     <div
     v-for="pokemon in pokemonList.slice(0, showCount)"
     :key="pokemon.id"
-    class="bg-transparant transition bg-[url('../assets/pokeS.png')] bg-no-repeat bg-cofer bg-[position:top_10px_right_20px] ease-in-out hover:-translate-y-2 rounded-xl p-4 flex flex-col items-center group"
+    class="bg-gray-200 transition  hover:-translate-y-2 rounded-xl p-4 flex flex-col items-center group"
     @click="goToDetail(pokemon.id)"
     >
-    <div class="text-yellow-400 text-sm font-semibold hover:text-blue-400 transition-colors">#{{ pokemon.id }}</div>
+    <div class="text-yellow-400 text-sm font-semibold hover:text-blue-400 transition-colors">{{ pokemon.id }}</div>
     <img
     :src="pokemon.image"
     alt="Pokemon"
-    class="w-64 h-64 object-contain"
+    class="w-64 h-64 object-contain bg-[url('../assets/pokeS.png')] bg-no-repeat bg-cofer bg-[position:top_0px_right_0px] ease-in-out"
     />
     <h1 class="text-xl font-bold text-gray-300 mt-2 capitalize transition-colors group-hover:text-yellow-400">
         {{ pokemon.name }}

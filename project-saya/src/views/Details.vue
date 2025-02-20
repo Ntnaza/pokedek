@@ -2,11 +2,17 @@
 import { ref, onMounted, computed } from "vue";
 import { useRoute } from "vue-router";
 import icon from "@/components/icon.vue";
+// import Navbar from "@/components/Navbar.vue";
 import icon_side from "@/components/icon_side.vue";
+// import LoadingSpiner from './components/LoadingSpiner.vue';
 
 const route = useRoute();
 const pokemon = ref(null);
 const isLoading = ref(true);
+setTimeout(() => {
+  isLoading.value = false;
+}, 3000);
+
 const errorMessage = ref("");
 const activeTab = ref("about");
 const isCatching = ref(false);
@@ -128,20 +134,23 @@ onMounted(() => {
 </script>
 
 <template>
-  <icon />
+
+
+  <!-- <Navbar /> -->
+  <icon/>
   <icon_side />
   <div
     :class="[
-      'min-h-screen',
+      'min-h-auto',
       'flex',
       'items-center',
       'justify-center',
-      'p-4',
-      backgroundColor,
+      'p-5',
+      'bg-gray-100',
     ]"
   >
     <div v-if="isLoading" class="text-center text-lg font-semibold text-white">
-      Loading...
+      <img src="../assets/pokego.png" class=" animate-spin" alt="">
     </div>
     <div
       v-else-if="errorMessage"
@@ -151,28 +160,38 @@ onMounted(() => {
     </div>
 
     <div v-else class="w-full max-w-5xl">
-      <div class="rounded-3xl p-6 w-full flex flex-col md:flex-row bg-gray-200">
+      <div :class="[
+      'rounded-3xl',
+      'p-6',
+      'w-full',
+      'flex',
+      'flex-col',
+      'md:flex-row',
+      'py-10',
+      backgroundColor,
+      ]" >
+        <!-- ///////////// -->
         <div class="desktop-buttons">
           <button
             @click="goToPreviousPokemon"
-            class="btn btn-neutral size-10 rounded-full m-auto mr-8 pl-4 pr-5"
+            class="btn btn-neutral size-10 rounded-full mr-8  m-auto ml-auto bg-yellow-400"
           >
           <i class="fa-regular fa-circle-left"></i>
           </button>
         </div>
 
         <div
-          class="md:w-1/2 flex flex-col items-center bg-transparent mr-3 p-4 rounded-2xl"
+          class="md:w-1/2 flex flex-col items-center bg-transparent mr-3 p-4 rounded-2xl "
         >
-          <h1 class="text-xl font-bold text-gray-600">#{{ pokemon.id }}</h1>
-          <img :src="pokemon.image" :alt="pokemon.name" class="w-64 h-64" />
-          <h1 class="text-3xl font-bold text-gray-600 mt-4">
+          <h1 class="text-xl font-bold text-gray-100">{{ pokemon.id }}</h1>
+          <img :src="pokemon.image" :alt="pokemon.name" class=" hover:scale-105  w-64 h-64 bg-[url('../assets/pokeS.png')] bg-no-repeat bg-cofer bg-[position:top_0px_right_0px] transition ease-in-out" />
+          <h1 class="text-3xl font-bold text-gray-100 mt-4">
             {{ pokemon.name }}
           </h1>
 
           <button
             @click="catchPokemon"
-            class="mt-4 px-6 py-2 rounded-2xl bg-yellow-400 duration-200 hover:bg-gray-400 flex items-center justify-center"
+            class="mt-4 px-6 py-2  rounded-full bg-yellow-400 duration-200 hover:bg-gray-400 flex items-center justify-center"
             :disabled="isCatching"
           >
             <img
@@ -187,7 +206,7 @@ onMounted(() => {
           </button>
         </div>
 
-        <div class="md:w-1/2 bg-gray-600 rounded-3xl shadow-lg p-6 max-w-lg">
+        <div class=" m-auto w-auto bg-gray-600 rounded-3xl shadow-lg p-6 max-w-lg">
           <div class="flex gap-2">
             <button
               @click="activeTab = 'about'"
@@ -212,8 +231,8 @@ onMounted(() => {
             </button>
           </div>
 
-          <div v-if="activeTab === 'about'" class="mt-8 space-y-4">
-            <p class="text-gray-400">
+          <div v-if="activeTab === 'about'" class="mt-8 space-y-4 h-80">
+            <p class="text-gray-400 font-mono font-semibold">
               <strong>Types:</strong>
               <span
                 v-for="type in pokemon.types"
@@ -223,13 +242,13 @@ onMounted(() => {
                 {{ type }}
               </span>
             </p>
-            <p class="text-gray-400">
+            <p class="text-gray-400 font-mono font-semibold">
               <strong>Height:</strong> {{ pokemon.height }}
             </p>
-            <p class="text-gray-400">
+            <p class="text-gray-400 font-mono">
               <strong>Weight:</strong> {{ pokemon.weight }}
             </p>
-            <p class="text-gray-400">
+            <p class="text-gray-400 font-mono font-semibold">
               <strong>Abilities:</strong>
               <span
                 v-for="ability in pokemon.abilities"
@@ -239,31 +258,31 @@ onMounted(() => {
                 {{ ability }}
               </span>
             </p>
-            <p class="text-gray-400">
+            <p class="text-gray-400 font-mono">
               <strong>XP:</strong> {{ pokemon.experience }} Exp
             </p>
           </div>
-          <div v-if="activeTab === 'moves'" class="mt-4 space-y-2">
+          <div v-if="activeTab === 'moves'" class="mt-2 space-y-2 h-80">
           <div
-            class="grid grid-cols-2 max-h-[300px] overflow-y-auto p-1 md:grid-cols-2 gap-5"
+            class="grid grid-rows-0 grid-cols-3 lg:grid-cols-3 gap-3 h-80 pr-3 overflow-y-scroll -mr-3 "
           >
             <span
               v-for="move in pokemon.moves"
               :key="move.move.name"
-              class="bg-yellow-400 rounded-md text-center text-white font-medium text-sm"
+              class="border border-dashed py-2 hover:border-yellow-400 text-center text-sm font-semibold font-mono border-gray-500 text-white"
             >
               {{ move.move.name }}
             </span>
           </div>
         </div>
-        <div v-if="activeTab === 'stats'" class="mt-4 space-y-2">
+        <div v-if="activeTab === 'stats'" class="mt-4 space-y-2 h-80">
           <div v-for="stat in pokemon.stats" :key="stat.stat.name">
-            <p class="text-white font-semibold">
+            <p class="text-white font-mono">
               {{ stat.stat.name.toUpperCase() }}: {{ stat.base_stat }}
             </p>
             <div class="w-full bg-white rounded-full h-3">
               <div
-                class="bg-yellow-400 h-3 rounded-full transition-all duration-300 overflow-hidden"
+                class="bg-yellow-400 h-3 rounded-full transition-all duration-300 overflow-hidden "
                 :style="{ width:Math.min (stat.base_stat,100) + '%' }"
               ></div>
             </div>
@@ -274,30 +293,30 @@ onMounted(() => {
         <div class="desktop-buttons">
           <button
             @click="goToNextPokemon"
-            class="btn btn-neutral size-10 rounded-full m-auto ml-5 pl-4 pr-5"
+            class="btn btn-neutral size-10 rounded-full m-auto ml-auto bg-yellow-400"
           >
-          <i class="fa-regular fa-circle-right"></i>
+          <i class="fa-regular fa-circle-right "></i>
           </button>
         </div>
       </div>
 
-      <div class="mobile-buttons mt-4 flex justify-center space-x-4">
+      <div class="mobile-buttons mt-4 flex justify-center space-x-4 ">
         <button
           @click="goToPreviousPokemon"
-          class="btn btn-neutral size-10 rounded-full pl-4 pr-3"
+          class="btn btn-neutral size-10 rounded-full  m-auto ml-auto bg-yellow-400"
         >
         <i class="fa-regular fa-circle-left"></i>
         </button>
         <button
           @click="goToNextPokemon"
-          class="btn btn-neutral size-10 rounded-full pl-4 pr-5"
+          class="btn btn-neutral size-10 rounded-full  m-auto ml-auto bg-yellow-400"
         >
         <i class="fa-regular fa-circle-right"></i>
         </button>
       </div>
     </div>
   </div>
-
+<!-- ///////////// -->
   <div
     v-if="caughtMessage"
     class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 animate-fadeIn"
@@ -312,7 +331,7 @@ onMounted(() => {
 
       <div v-if="caughtMessage.success" class="animate-fadeIn">
         <h2 class="text-xl font-semibold text-green-700">
-          horeee dapet {{ caughtMessage.pokemon.name }}!
+          Kamu Mendapatkan {{ caughtMessage.pokemon.name }}!
         </h2>
         <img
           :src="caughtMessage.pokemon.image"
@@ -325,13 +344,13 @@ onMounted(() => {
       </div>
       <div v-else class="animate-fadeIn">
         <h2 class="text-xl font-semibold text-red-700">
-          Pokemon Mu kabur...
+          Pokemon Mu Pergi...
         </h2>
       </div>
 
       <button
         @click="closeMessage"
-        class="mt-4 px-4 py-2 bg-yellow-500 rounded hover:bg-red-600 text-white"
+        class="mt-4 px-4 py-2 bg-gray-500 rounded hover:bg-red-600 text-white"
       >
         Close
       </button>

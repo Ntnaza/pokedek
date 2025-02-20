@@ -19,9 +19,9 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="h-screen flex bg-transparent absolute">
+  <div class="h-screen flex bg-transparent absolute ">
     <nav
-      class="fixed left-0 top-0 h-full bg-transparent py-5 px-3 w-16 flex flex-col justify-center items-center space-y-6 pointer-events-none"
+      class="fixed left-0 top-0 h-full bg-transparent py-5 px-3 w-16 flex flex-col justify-center items-center space-y-0 pointer-events-none"
     >
       <RouterLink to="/capture" class="w-16 rounded ml-4">
         <div
@@ -32,7 +32,7 @@ onUnmounted(() => {
             href="#"
             class="text-gray-500 hover:text-blue-500 transition pointer-events-auto"
           >
-            <img src="../assets/pokebal.png" alt="" class="animate-spin" />
+            <img src="../assets/pokego.png" alt="" class="animate-spin" />
           </a>
         </div>
       </RouterLink>

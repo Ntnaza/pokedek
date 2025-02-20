@@ -6,6 +6,9 @@ const capturedPokemon = ref([]);
 const showConfirmDialog = ref(false); // Menampilkan dialog konfirmasi
 const selectedPokemon = ref(null); // Menyimpan Pokémon yang akan dihapus
 
+
+
+
 onMounted(() => {
   capturedPokemon.value = JSON.parse(localStorage.getItem("pokemonList")) || [];
 });
@@ -36,8 +39,8 @@ const confirmDelete = (pokemon) => {
 
 <template> 
   <icon />
-  <div class="p-6">
-    <h1 class="text-3xl font-bold text-center text-white pt-10">Captured Pokemon</h1>
+  <div class="p-6 bg-gray-100 h-auto">
+    <h1 class="text-3xl font-bold text-center  text-gray-800 pt-10">Captured Pokemon</h1>
 
     <!-- Jika belum ada Pokémon yang tertangkap -->
     <div
@@ -52,7 +55,12 @@ const confirmDelete = (pokemon) => {
       <div
         v-for="pokemon in capturedPokemon"
         :key="pokemon.uniqueId"
-        class="bg-gray-800 p-4 rounded-lg shadow-md text-center relative"
+        :class="['p-4',
+        'rounded-lg',
+        'shadow-md',
+        'text-center',
+        'relative',
+        'bg-gray-500',]"
       >
         <img
           :src="pokemon.image"
